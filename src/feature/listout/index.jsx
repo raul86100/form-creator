@@ -8,7 +8,7 @@ export const CRM = () => {
   return (
     <div className="crm">
       My Forms
-      <SimpleBtn title={"Create"} callback={()=>navigate('/creator')}/>
+      <SimpleBtn title={"Create"} callback={()=>navigate('/user/creator')}/>
     </div>
   );
 };

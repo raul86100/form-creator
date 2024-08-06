@@ -8,8 +8,8 @@ import { IoSettings } from "react-icons/io5";
 const HomeLayout = () => {
   const navigate = useNavigate();
   const DashItems = [
-    { icons: <MdFormatListBulletedAdd size={38} />, name: "CRM", link: "/" },
-    { icons: <IoSettings size={38} />, name: "Setting", link: "/setting" },
+    { icons: <MdFormatListBulletedAdd size={38} />, name: "CRM", link: "/user" },
+    { icons: <IoSettings size={38} />, name: "Setting", link: "/user/setting" },
   ];
   const handleNavigate = (link) => {
     navigate(link);
