@@ -1,0 +1,5 @@
+@import "../../style/mixin/index.scss";
+.crm {
+  width: 100%;
+  @include flex(row, space-between, center, 0px);
+}

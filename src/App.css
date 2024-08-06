@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+
+*{
+  font-family: cursive;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.simple-btn{
+  background-color:#24A68A;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  color:white;
+}
+.simple-btn:hover{
+  transform: scaleX(1.1) scaleY(1.1);
+  
+}

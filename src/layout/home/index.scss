@@ -1,0 +1,44 @@
+@import '../../style/variable/index.scss';
+@import '../../style/mixin/index.scss';
+
+.home-layout{
+    width: 100%;
+    height: 100vh;
+
+    .header{
+        padding: 8px 16px 8px 16px;
+        background:$white;
+        border-bottom: 1px solid lightslategray;
+        font-size: x-large;
+        height: 48px;
+        color: $green;
+        display: flex;
+        align-items: center;
+       
+    }
+    .app-body{
+        height: calc(100vh - 66px);
+        display: flex;
+
+
+
+        .side-bar-outer{
+            background-color: $sideBarColor;
+            color: $white;
+            width:$sideBarWidth;
+            padding-top: 1rem;
+
+            ul{
+                @include flex(column,flex-start,center,15px);
+                list-style-type: none;
+                li{
+                    cursor: pointer;
+                }
+            }
+        }
+        .outlet-view{
+            width: calc(100% - $sideBarWidth);
+            padding: 10px;
+        }
+    }
+}
