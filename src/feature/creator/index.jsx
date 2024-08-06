@@ -26,12 +26,12 @@ const ItemsTool = [
     label: "Label Radio",
     option: [{ label: "yes" }, { label: "no" }],
   },
-  {
-    type: "checkbox",
-    id: "checkbox1",
-    label: "Label Check",
-    option: "Default Value",
-  },
+  // {
+  //   type: "checkbox",
+  //   id: "checkbox1",
+  //   label: "Label Check",
+  //   option: "Default Value",
+  // },
   { type: "submit", label: "Submit", id: "submit1" },
 ];
 export const Creator = () => {
