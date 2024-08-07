@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./index.scss";
 import { Modal } from "antd";
 import axios from "axios";
+import { apiConstant } from "../../constant/apiConatant";
 const ItemsTool = [
   {
     type: "input",
@@ -193,7 +194,7 @@ export const Creator = () => {
     if (workspaceRef.current) {
       const content = workspaceRef.current.innerHTML;
       console.log(content);
-      const formSubmit= await axios({url:"http://localhost:5050/user/create-form",method:"post",data:{createdBy:1,template:content.toString(),templateName:workspace}});
+      const formSubmit= await axios({url:apiConstant.saveForm,method:"post",data:{createdBy:1,template:content.toString(),templateName:workspace}});
       console.log(formSubmit,"kkkk")
     }
   };
