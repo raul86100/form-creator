@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./index.scss";
 import { Modal } from "antd";
+import axios from "axios";
 const ItemsTool = [
   {
     type: "input",
@@ -188,10 +189,12 @@ export const Creator = () => {
     );
   };
 
-  const handleGetContent = () => {
+  const handleGetContent = async() => {
     if (workspaceRef.current) {
       const content = workspaceRef.current.innerHTML;
       console.log(content);
+      const formSubmit= await axios({url:"http://localhost:5050/user/create-form",method:"post",data:{createdBy:1,template:content.toString(),templateName:workspace}});
+      console.log(formSubmit,"kkkk")
     }
   };
   const handleEditField = (e, index, item) => {
