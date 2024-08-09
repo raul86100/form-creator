@@ -3,6 +3,7 @@ import "./index.scss";
 import { Modal } from "antd";
 import axios from "axios";
 import { apiConstant } from "../../constant/apiConatant";
+
 const ItemsTool = [
   {
     type: "input",
@@ -26,16 +27,17 @@ const ItemsTool = [
     type: "radio",
     id: "radio1",
     label: "Label Radio",
-    option: [{ label: "yes" }, { label: "no" }],
+    options: [{ label: "yes" }, { label: "no" }],
   },
-  // {
-  //   type: "checkbox",
-  //   id: "checkbox1",
-  //   label: "Label Check",
-  //   option: "Default Value",
-  // },
+  {
+    type: "checkbox",
+    id: "checkbox1",
+    label: "Label Check",
+    options: [{ label: "Default Value" }],
+  },
   { type: "submit", label: "Submit", id: "submit1" },
 ];
+
 export const Creator = () => {
   const workspaceRef = useRef(null);
   const [workspace, setWorkspace] = useState("Form");
@@ -77,7 +79,12 @@ export const Creator = () => {
         return (
           <label
             key={item.id}
-            style={{ display: "flex", flexDirection: "column", gap: "10px",fontWeight:"bold" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              fontWeight: "bold",
+            }}
           >
             {item.label}
             <input
@@ -87,7 +94,7 @@ export const Creator = () => {
               minLength={item.minLength}
               maxLength={item.maxLength}
               onClick={(e) => e.stopPropagation()}
-              style={{padding:"5px"}}
+              style={{ padding: "5px" }}
             />
           </label>
         );
@@ -95,15 +102,19 @@ export const Creator = () => {
         return (
           <label
             key={item.id}
-            style={{ display: "flex", flexDirection: "column", gap: "10px",fontWeight:"bold" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              fontWeight: "bold",
+            }}
           >
             {item.label}
             <textarea
               name={item.id}
               placeholder={item.placeholder}
               onClick={(e) => e.stopPropagation()}
-              style={{padding:"5px"}}
-
+              style={{ padding: "5px" }}
             ></textarea>
           </label>
         );
@@ -111,15 +122,24 @@ export const Creator = () => {
         return (
           <label
             key={item.id}
-            style={{ display: "flex", flexDirection: "column", gap: "10px",fontWeight:"bold" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              fontWeight: "bold",
+            }}
           >
             {item.label}
-            <input type="range" name={item.id}   onClick={(e) => e.stopPropagation()}/>
+            <input
+              type="range"
+              name={item.id}
+              onClick={(e) => e.stopPropagation()}
+            />
           </label>
         );
       case "radio":
         return (
-          <fieldset style={{ border: "none" }}>
+          <fieldset style={{ border: "none" }} name={item.id}>
             <legend
               key={item.id}
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
@@ -127,24 +147,22 @@ export const Creator = () => {
               {item.label}
             </legend>
 
-            {item.option.map((newitem, index) => {
-              return (
-                <label
+            {item.options.map((option, index) => (
+              <label
                 onClick={(e) => e.stopPropagation()}
-                  style={{
-                    display: "flex",
-                    width: "fit-content",
-                    alignItems: "center",
-                    gap: "5px",
-                    flexDirection: "row",
-                  }}
-                  key={index}
-                >
-                  <input type="radio" name={item.id} key={index} value={newitem.label} />
-                  {newitem.label}
-                </label>
-              );
-            })}
+                style={{
+                  display: "flex",
+                  width: "fit-content",
+                  alignItems: "center",
+                  gap: "5px",
+                  flexDirection: "row",
+                }}
+                key={index}
+              >
+                <input type="radio" name={item.id} value={option.label} />
+                {option.label}
+              </label>
+            ))}
           </fieldset>
         );
       case "checkbox":
@@ -155,11 +173,12 @@ export const Creator = () => {
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
             {item.label}
-            <section style={{ display: "flex" }}>
-              {" "}
-              <input type="checkbox" name={item.id} />
-              {item.option}
-            </section>
+            {item.options.map((option, index) => (
+              <section key={index} style={{ display: "flex" }}>
+                <input type="checkbox" name={item.id} value={option.label} />
+                {option.label}
+              </section>
+            ))}
           </label>
         );
       case "submit":
@@ -190,14 +209,23 @@ export const Creator = () => {
     );
   };
 
-  const handleGetContent = async() => {
+  const handleGetContent = async () => {
     if (workspaceRef.current) {
       const content = workspaceRef.current.innerHTML;
       console.log(content);
-      const formSubmit= await axios({url:apiConstant.saveForm,method:"post",data:{createdBy:1,template:content.toString(),templateName:workspace}});
-      console.log(formSubmit,"kkkk")
+      const formSubmit = await axios({
+        url: apiConstant.saveForm,
+        method: "post",
+        data: {
+          createdBy: 1,
+          template: content.toString(),
+          templateName: workspace,
+        },
+      });
+      console.log(formSubmit, "kkkk");
     }
   };
+
   const handleEditField = (e, index, item) => {
     e.stopPropagation();
     setIsEdit(true);
@@ -207,15 +235,49 @@ export const Creator = () => {
   const handleUpdateObject = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const formValues = Object.fromEntries(formData.entries());
-    console.log(formValues,selectedItem.index);
-    const data = destinationItems;
+    let formValues = Object.fromEntries(formData.entries());
+    formValues = { ...formValues, ...selectedItem.item };
+    const data = [...destinationItems];
     data[selectedItem.index] = {
       ...data[selectedItem.index],
-      ...formValues
-    };;
+      ...formValues,
+    };
     setDestinationItems(data);
     setIsEdit(false);
+  };
+
+  const handleOptionChange = (e, optionIndex) => {
+    const newOptions = [...selectedItem.item.options];
+    newOptions[optionIndex] = { label: e.target.value };
+
+    setSelectedItem((prevState) => ({
+      ...prevState,
+      item: {
+        ...prevState.item,
+        options: newOptions,
+      },
+    }));
+    console.log(selectedItem, "kkkk");
+  };
+
+  const addOption = () => {
+    setSelectedItem((prevState) => ({
+      ...prevState,
+      item: {
+        ...prevState.item,
+        options: [...prevState.item.options, { label: "" }],
+      },
+    }));
+  };
+
+  const removeOption = (index) => {
+    setSelectedItem((prevState) => ({
+      ...prevState,
+      item: {
+        ...prevState.item,
+        options: prevState.item.options.filter((_, i) => i !== index),
+      },
+    }));
   };
 
   return (
@@ -227,47 +289,79 @@ export const Creator = () => {
             onSubmit={handleUpdateObject}
           >
             {Object.entries(selectedItem.item).map(([key, value]) => {
-              if (!Array.isArray(value)) {
-               
-                  return (
-                    <label
-                      key={key}
+              if (key !== "options") {
+                return (
+                  <label
+                    key={key}
+                    style={{
+                      display: key !== "type" ? "flex" : "none",
+                      flexDirection: "column",
+                      gap: "5px",
+                    }}
+                  >
+                    <strong>{key}:</strong>
+                    <input
+                      type="text"
+                      name={key}
+                      value={value}
                       style={{
-                        display:key !== "type"?"flex":"none",
-                        flexDirection: "column",
-                        gap: "5px",
-                        
+                        padding: 7,
+                        outline: "none",
+                        borderRadius: "10px",
+                        border: "2px solid grey",
                       }}
-                      
-                    >
-                      <strong>{key}:</strong>
-                      <input
-                        type={"text"}
-                        name={key}
-                        value={value}
+                      onChange={(e) => {
+                        setSelectedItem((prevState) => ({
+                          ...prevState,
+                          item: {
+                            ...prevState.item,
+                            [e.target.name]: e.target.value,
+                          },
+                        }));
+                      }}
+                      required
+                    />
+                  </label>
+                );
+              } else {
+                return (
+                  <div key={key} name="option">
+                    <p>Options:</p>
+                    {value.map((option, index) => (
+                      <div
+                        key={index}
                         style={{
-                          padding: 7,
-                          outline: "none",
-                          borderRadius: "10px",
-                          border: " 2px solid grey",
+                          display: "flex",
+                          gap: "10px",
+                          alignItems: "center",
                         }}
-                        onChange={(e) => {
-                          setSelectedItem((prevState) => ({
-                            ...prevState,
-                            item: {
-                              ...prevState.item,
-                              [e.target.name]: e.target.value,
-                            },
-                          }));
-                        }}
-                        required
-                      />
-                    </label>
-                  );
-                } else {
-                  return <></>;
-                }
-             
+                      >
+                        <input
+                          type="text"
+                          value={option.label}
+                          onChange={(e) => handleOptionChange(e, index)}
+                          name="label"
+                          style={{
+                            padding: 7,
+                            outline: "none",
+                            borderRadius: "10px",
+                            border: "2px solid grey",
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeOption(index)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                    <button type="button" onClick={addOption}>
+                      Add Option
+                    </button>
+                  </div>
+                );
+              }
             })}
             <button type="submit" style={{ width: "fit-content" }}>
               Submit
@@ -276,12 +370,11 @@ export const Creator = () => {
         </Modal>
       )}
       <header>
-        {" "}
-        Creator Tool :{" "}
+        Creator Tool:
         <input
           value={workspace}
           onChange={(e) => setWorkspace(e.target.value)}
-          placeholder="enter the form title"
+          placeholder="Enter the form title"
         />
       </header>
       <section className="creator-layout">
