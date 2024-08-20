@@ -19,6 +19,7 @@
     .app-body{
         height: calc(100vh - 66px);
         display: flex;
+        max-height: fit-content;
 
 
 
@@ -27,6 +28,7 @@
             color: $white;
             width:$sideBarWidth;
             padding-top: 1rem;
+            max-height: fit-content;
 
             ul{
                 @include flex(column,flex-start,center,15px);
@@ -39,6 +41,9 @@
         .outlet-view{
             width: calc(100% - $sideBarWidth);
             padding: 10px;
+            min-height: fit-content;
+            overflow-y: scroll;
+
         }
     }
 }

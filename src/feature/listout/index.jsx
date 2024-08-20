@@ -15,13 +15,32 @@ export const CRM = () => {
   return (
     <div>
       <div className="crm">
-        My Forms
+        <h2>My Forms</h2>
         <SimpleBtn
           title={"Create"}
           callback={() => navigate("/user/creator")}
         />
       </div>
-      {isLoading ? "loading" : <h2>data fetched</h2>}
+      {isLoading ? (
+        "loading"
+      ) : (
+        <>
+          <section className="list-of-cards">
+            {data?.map((item, index) => {
+              return (
+                <div key={index}>
+                  <p>{index+1}</p>
+                  <p>{item.templateName}</p>
+                  <p>updatedAt:{item.updatedAt}</p> 
+                  <p>createdby:{item.createdBy}</p> 
+                  <span>Preview</span>
+                  <span>Fill</span>      
+                </div>
+              );
+            })}
+          </section>
+        </>
+      )}
     </div>
   );
 };

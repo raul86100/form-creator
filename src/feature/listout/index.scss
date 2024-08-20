@@ -1,5 +1,32 @@
 @import "../../style/mixin/index.scss";
+@import "../../style/variable/index.scss";
 .crm {
   width: 100%;
   @include flex(row, space-between, center, 0px);
+}
+
+.list-of-cards{
+  width: 100%;
+  padding-top: 10px;
+  @include flex(column,flex-start, center, 30px);
+  div{
+    width: 90%;
+    padding: 30px 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    @include flex(row,space-between,center,0px);
+    p{
+      width: 20%;
+      text-align: center;
+    }
+    span{
+      width: 10%;
+    }
+    &:hover{
+      transform: scaleX(1.01) scaleY(1.01);
+      color: white;
+      background-color:$green;
+      cursor: pointer;
+    }
+  }
+  
 }
