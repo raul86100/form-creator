@@ -142,7 +142,7 @@ export const Creator = () => {
           <fieldset style={{ border: "none" }} name={item.id}>
             <legend
               key={item.id}
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              style={{ display: "flex", flexDirection: "column", gap: "10px" ,fontWeight:"bold"}}
             >
               {item.label}
             </legend>

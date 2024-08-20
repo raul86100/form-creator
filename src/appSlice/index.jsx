@@ -5,3 +5,4 @@ export const fetchAllFrom = async () => {
   const data = await axios.get(apiConstant.getAllForm);
   return data?.data?.data;
 };
+

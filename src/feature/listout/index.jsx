@@ -7,7 +7,7 @@ import { fetchAllFrom } from "../../appSlice";
 
 export const CRM = () => {
   const navigate = useNavigate();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading} = useQuery({
     queryKey: ["getallform"],
     queryFn: fetchAllFrom,
   });
@@ -34,7 +34,7 @@ export const CRM = () => {
                   <p>updatedAt:{item.updatedAt}</p> 
                   <p>createdby:{item.createdBy}</p> 
                   <span>Preview</span>
-                  <span>Fill</span>      
+                  <span onClick={()=>navigate('/formView',{state:{data:item}})}>Fill</span>      
                 </div>
               );
             })}
