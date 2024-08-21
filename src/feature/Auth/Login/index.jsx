@@ -12,14 +12,14 @@ function Login() {
             const { latitude, longitude } = position.coords;
   
             // Call a reverse geocoding API here (e.g., Google Maps API or OpenCage API)
-            fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=bb8aa9e06cc5434ba08489762194084a`)
-              .then((response) => response.json())
-              .then((data) => {
-                const country = data.results[0].annotations.callingcode;
-                console.log(country)
-                setCountryCode(""+country);
-              })
-              .catch((error) => console.log('Error fetching country data:', error));
+            // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=bb8aa9e06cc5434ba08489762194084a`)
+            //   .then((response) => response.json())
+            //   .then((data) => {
+            //     const country = data.results[0].annotations.callingcode;
+            //     console.log(country)
+            //     setCountryCode(""+country);
+            //   })
+            //   .catch((error) => console.log('Error fetching country data:', error));
           },
           (error) => {
             console.log('Error getting location:', error);
